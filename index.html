@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Portofolio Daka | Web Developer & MC</title>
+        
+        <!-- Google Fonts: Poppins -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Poppins', 'sans-serif'],
+                        },
+                        colors: {
+                            primary: 'var(--color-primary)', // Sekarang warnanya dinamis!
+                            darkBg: '#0f172a', 
+                            darkCard: '#1e293b',
+                        },
+                        animation: {
+                            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                            'blob': 'blob 7s infinite',
+                        },
+                        keyframes: {
+                            blob: {
+                                '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                                '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <style>
+            :root {
+                --color-primary: #249174; /* Warna emerald/teal untuk White Mode */
+            }
+
+            .dark {
+                --color-primary: #3b82f6; /* Warna biru (Blue-500) untuk Dark Mode. Bisa kamu ganti hex-nya sesuai selera! */
+            }
+            /* Custom Scrollbar */
+            ::-webkit-scrollbar { width: 8px; }
+            ::-webkit-scrollbar-track { background: transparent; }
+            ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+            .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+            /* --- Animasi Kustom Reveal On Scroll (Masuk & Keluar Dinamis) --- */
+            .reveal {
+                opacity: 0;
+                transform: translateY(40px) scale(0.98);
+                transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+                will-change: opacity, transform;
+            }
+
+            .reveal.active {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            .reveal-delay-1 { transition-delay: 100ms; }
+            .reveal-delay-2 { transition-delay: 200ms; }
+            .reveal-delay-3 { transition-delay: 300ms; }
+
+            /* Animasi Awal Hero Section */
+            @keyframes heroFadeInUp {
+                0% { opacity: 0; transform: translateY(30px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
+            .hero-animate {
+                opacity: 0;
+                animation: heroFadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            }
+            .hero-delay-1 { animation-delay: 100ms; }
+            .hero-delay-2 { animation-delay: 300ms; }
+            .hero-delay-3 { animation-delay: 500ms; }
+            .hero-delay-4 { animation-delay: 700ms; }
+            .hero-delay-5 { animation-delay: 900ms; }
+
+            /* Hover Effect pada Skill Card */
+            .skill-card:hover .skill-icon {
+                transform: scale(1.15) rotate(8deg);
+                color: var(--color-primary);
+            }
+            .skill-icon {
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+            }
+
+            /* Glassmorphism utility tambahan jika perlu */
+            .glass {
+                background: rgba(255, 255, 255, 0.6);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            .dark .glass {
+                background: rgba(30, 41, 59, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            
+            .animation-delay-2000 { animation-delay: 2s; }
+            .animation-delay-4000 { animation-delay: 4s; }
+        </style>
+    </head>
+    <body class="font-sans bg-transparent text-gray-800 dark:text-gray-200 transition-colors duration-300 overflow-x-hidden relative">
+
+        <!-- ANIMATED BACKGROUND LAYER -->
+        <div class="fixed inset-0 z-[-1] bg-slate-50 dark:bg-darkBg transition-colors duration-300 overflow-hidden">
+            <!-- Blur Orbs / Blobs -->
+            <div class="absolute top-0 -left-4 w-72 md:w-96 h-72 md:h-96 bg-emerald-300 dark:bg-emerald-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] opacity-70 animate-blob"></div>
+            <div class="absolute top-0 -right-4 w-72 md:w-96 h-72 md:h-96 bg-emerald-300 dark:bg-emerald-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-20 w-72 md:w-96 h-72 md:h-96 bg-emerald-200 dark:bg-emerald-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[80px] opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <!-- Navbar -->
+        <nav class="fixed w-full z-50 glass transition-colors duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex-shrink-0 font-bold text-xl tracking-wider hover:text-primary transition-colors cursor-pointer drop-shadow-sm">
+                        putraaa<span class="text-primary">ctr_</span>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-8 font-medium">
+                            <a href="#home" class="hover:text-primary transition-colors relative group">Home
+                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                            <a href="#about" class="hover:text-primary transition-colors relative group">About
+                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                            <a href="#experience" class="hover:text-primary transition-colors relative group">Experience
+                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                            <a href="#portfolio" class="hover:text-primary transition-colors relative group">Projects
+                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="p-2.5 rounded-xl bg-white/50 dark:bg-slate-700/50 hover:bg-white dark:hover:bg-slate-600 border border-white/20 shadow-sm backdrop-blur-sm transition-all group active:scale-90">
+                        <i id="theme-icon" class="fas fa-moon text-gray-800 dark:text-yellow-400 group-hover:rotate-[360deg] transition-transform duration-500"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 min-h-screen flex items-center justify-center relative">
+            <div class="max-w-7xl mx-auto z-10 flex flex-col md:flex-row items-center gap-12 md:gap-20">
+                
+                <!-- NEW PHOTO SLOT -->
+                <div class="hero-animate hero-delay-1 flex-shrink-0 relative group">
+                    <!-- Photo Container with effects -->
+                    <div class="w-48 h-48 md:w-60 md:h-60 rounded-full overflow-hidden border-4 border-primary/20 p-1 bg-white dark:bg-darkBg transition-all duration-500 shadow-xl shadow-slate-200 dark:shadow-slate-900 group-hover:scale-105 group-hover:border-primary/40 group-hover:-rotate-3">
+                        <!-- REPLACE WITH YOUR ACTUAL PHOTO -->
+                        <!-- Place your photo in the current directory and update src below -->
+                        <!-- Or you can use a placeholder, or just remove the slot if you don't have a photo yet -->
+                        <div class="w-full h-full rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center border-2 border-primary/50 text-emerald-600 dark:text-emerald-300 font-bold text-4xl">
+                            <img src="profile.png" alt="Daka's Photo" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <!-- <img src="path/to/your/photo.jpg" alt="Daka's Photo" class="w-full h-full object-cover rounded-full"> -->
+                    </div>
+                </div>
+
+                <div class="text-center md:text-left flex-1">
+                    <div class="inline-block hero-animate hero-delay-2 px-4 py-1.5 rounded-full bg-emerald-100/50 dark:bg-emerald-900/30 text-primary font-semibold tracking-wide uppercase text-xs md:text-sm mb-6 border border-blue-200 dark:border-blue-800 backdrop-blur-sm">
+                        Halo, Welcome! 👋
+                    </div>
+                    <h1 class="hero-animate hero-delay-3 text-5xl md:text-7xl font-bold mb-6 dark:text-white drop-shadow-sm tracking-tight">
+                        I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary hover:scale-105 inline-block transition-transform duration-300 cursor-default">Daka</span>
+                    </h1>
+                    <p class="hero-animate hero-delay-4 text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-10 max-w-2xl mx-auto md:mx-0 leading-relaxed">
+                        A 16-year-old Web Developer and IT student from SMK Metland Cibitung, blending coding skills with strong leadership as an Event MC and Student Council Secretary.
+                    </p>
+                    <div class="hero-animate hero-delay-5 flex flex-col sm:flex-row justify-center md:justify-start gap-4 items-center">
+                        <a href="#portfolio" class="w-full sm:w-auto bg-gradient-to-r from-primary to-primary text-white px-8 py-3.5 rounded-full font-medium hover:from-primary hover:to-blue-700 transition-all shadow-lg shadow-primary/30 hover:-translate-y-1 active:scale-95 animate-pulse-slow">
+                            <i class="fas fa-code mr-2"></i> See My Projects
+                        </a>
+                        <a href="#contact" class="w-full sm:w-auto glass text-gray-800 dark:text-white px-8 py-3.5 rounded-full font-medium hover:bg-white/80 dark:hover:bg-slate-700/80 transition-all hover:-translate-y-1 active:scale-95 shadow-sm">
+                            <i class="fas fa-envelope mr-2"></i> Contact Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & About Section -->
+        <section id="about" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <h2 class="reveal text-3xl md:text-4xl font-bold mb-16 dark:text-white inline-block relative">
+                    Skills & Expertise
+                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"></div>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                    <!-- IT Skills -->
+                    <div class="reveal reveal-delay-1 skill-card p-8 glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-none transition-all duration-300 border-b-4 border-transparent hover:border-primary group">
+                        <div class="skill-icon text-primary text-5xl mb-6 bg-white/50 dark:bg-slate-800/50 w-16 h-16 rounded-xl flex items-center justify-center shadow-inner"><i class="fas fa-laptop-code"></i></div>
+                        <h3 class="text-xl font-bold mb-3 dark:text-white group-hover:text-primary transition-colors">Web & App Dev</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                            Berpengalaman menangani proyek website kompleks. Menguasai HTML, CSS, Tailwind, PHP Native, Laravel.
+                        </p>
+                    </div>
+                    <!-- Public Speaking -->
+                    <div class="reveal reveal-delay-2 skill-card p-8 glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-none transition-all duration-300 border-b-4 border-transparent hover:border-primary group">
+                        <div class="skill-icon text-primary text-5xl mb-6 bg-white/50 dark:bg-slate-800/50 w-16 h-16 rounded-xl flex items-center justify-center shadow-inner"><i class="fas fa-microphone-alt"></i></div>
+                        <h3 class="text-xl font-bold mb-3 dark:text-white group-hover:text-primary transition-colors">Public Speaking</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                            Dipercaya sebagai Master of Ceremony (MC) di berbagai acara besar sekolah seperti METFEST, Metschoorama.
+                        </p>
+                    </div>
+                    <!-- Leadership & Biz -->
+                    <div class="reveal reveal-delay-3 skill-card p-8 glass rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-none transition-all duration-300 border-b-4 border-transparent hover:border-primary group">
+                        <div class="skill-icon text-primary text-5xl mb-6 bg-white/50 dark:bg-slate-800/50 w-16 h-16 rounded-xl flex items-center justify-center shadow-inner"><i class="fas fa-users"></i></div>
+                        <h3 class="text-xl font-bold mb-3 dark:text-white group-hover:text-primary transition-colors">Leadership & Bisnis</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                            Menjabat Sekretaris INTI OSIS, Ketua Ekskul Seni, pengelola bisnis Kova Corner, dan Ketua Pelaksana berbagai acara.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Prestasi -->
+        <section id="experience" class="py-24 px-4 sm:px-6 lg:px-8 relative">
+            <div class="max-w-7xl mx-auto z-10 relative">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <!-- Prestasi -->
+                    <div class="glass p-8 md:p-10 rounded-3xl shadow-sm border border-white/40 dark:border-white/10">
+                        <h2 class="reveal text-2xl md:text-3xl font-bold mb-10 dark:text-white inline-block relative">
+                            Prestasi & Delegasi
+                            <div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-gradient-to-r from-primary to-transparent rounded-full"></div>
+                        </h2>
+                        <ul class="space-y-8">
+                            <li class="reveal relative pl-8 border-l-2 border-primary/30 group">
+                                <span class="absolute w-4 h-4 bg-gradient-to-br from-primary to-primary rounded-full -left-[9px] top-1 group-hover:scale-[1.3] shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300"></span>
+                                <h4 class="font-bold text-lg dark:text-white tracking-wide">Delegasi Nasional & Best Social Media</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">National Excellent Student Summit (NESS) 2026 - Universitas Indonesia</p>
+                            </li>
+                            <li class="reveal relative pl-8 border-l-2 border-primary/30 group">
+                                <span class="absolute w-4 h-4 bg-gradient-to-br from-primary to-primary rounded-full -left-[9px] top-1 group-hover:scale-[1.3] shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300"></span>
+                                <h4 class="font-bold text-lg dark:text-white tracking-wide">Delegasi Nasional FCP 2026</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Festival Cipta Prestasi 2026 - Balai Kota Tangerang Selatan</p>
+                            </li>
+                            <li class="reveal relative pl-8 border-l-2 border-primary/30 group">
+                                <span class="absolute w-4 h-4 bg-gradient-to-br from-primary to-primary rounded-full -left-[9px] top-1 group-hover:scale-[1.3] shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300"></span>
+                                <h4 class="font-bold text-lg dark:text-white tracking-wide">Mewakili Sekolah di Tingkat Provinsi</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Festival Olahraga Tradisional 2025 Jawa Barat & ISC President University</p>
+                            </li>
+                            <li class="reveal relative pl-8 border-l-2 border-primary/30 group">
+                                <span class="absolute w-4 h-4 bg-gradient-to-br from-primary to-primary rounded-full -left-[9px] top-1 group-hover:scale-[1.3] shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-300"></span>
+                                <h4 class="font-bold text-lg dark:text-white tracking-wide">Pramuka Penggalang Garuda</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Tingkat Kabupaten Bekasi Tahun 2024</p>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Organisasi -->
+                    <div class="glass p-8 md:p-10 rounded-3xl shadow-sm border border-white/40 dark:border-white/10">
+                        <h2 class="reveal text-2xl md:text-3xl font-bold mb-10 dark:text-white inline-block relative">
+                            Pengalaman Organisasi
+                            <div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-gradient-to-r from-primary to-transparent rounded-full"></div>
+                        </h2>
+                        <ul class="space-y-8">
+                            <li class="reveal flex gap-5 items-start group">
+                                <div class="mt-1 bg-white dark:bg-slate-800 shadow-sm text-primary p-3.5 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white"><i class="fas fa-pen-nib text-xl"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-lg dark:text-white group-hover:text-primary transition-colors duration-300">Sekretaris INTI OSIS & Event</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 transition-all duration-300">Menangani ratusan surat menyurat (SMP se-Kab. Bekasi). Sekretaris untuk Metschoorama & METFEST.</p>
+                                </div>
+                            </li>
+                            <li class="reveal flex gap-5 items-start group">
+                                <div class="mt-1 bg-white dark:bg-slate-800 shadow-sm text-primary p-3.5 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white"><i class="fas fa-theater-masks text-xl"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-lg dark:text-white group-hover:text-primary transition-colors duration-300">Ketua Ekskul Seni Pertunjukan</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 transition-all duration-300">Mengelola penampilan paduan suara, tari tradisional, dan modern dance.</p>
+                                </div>
+                            </li>
+                            <li class="reveal flex gap-5 items-start group">
+                                <div class="mt-1 bg-white dark:bg-slate-800 shadow-sm text-primary p-3.5 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white"><i class="fas fa-calendar-check text-xl"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-lg dark:text-white group-hover:text-primary transition-colors duration-300">Ketua Pelaksana Classmeet</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 transition-all duration-300">Memimpin jalannya kompetisi antarkelas selama 3 hari berturut-turut.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <h2 class="reveal text-3xl md:text-4xl font-bold mb-4 dark:text-white inline-block relative">
+                    Website Projects
+                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"></div>
+                </h2>
+                <p class="reveal text-gray-600 dark:text-gray-400 mb-14 max-w-2xl mx-auto text-lg">Beberapa proyek website kompleks yang telah saya kembangkan.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                    <!-- Project Card 1 -->
+                    <div class="reveal reveal-delay-1 glass rounded-2xl p-6 hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] group border border-white/40 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/40 text-primary dark:text-primary rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 group-hover:-rotate-6 transition-transform"><i class="fas fa-shopping-cart"></i></div>
+                            <div class="flex gap-3">
+                                <a href="https://github.com/putrawebdev/Adit-s-shop/" target="_blank" class="text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all hover:scale-110"><i class="fab fa-github text-2xl"></i></a>
+                                <a href="https://putrawebdev.github.io/Adit-s-shop/" target="_blank" class="text-gray-400 hover:text-primary transition-all hover:scale-110"><i class="fas fa-external-link-alt text-xl"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition-colors">Adit's Shop</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Platform e-commerce/toko online dengan antarmuka yang responsif.</p>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="reveal reveal-delay-2 glass rounded-2xl p-6 hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] group border border-white/40 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 bg-purple-100 dark:bg-emerald-900/40 text-primary dark:text-primary rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 group-hover:-rotate-6 transition-transform"><i class="fas fa-book"></i></div>
+                            <div class="flex gap-3">
+                                <a href="https://putrawebdev.byethost16.com/" target="_blank" class="text-gray-400 hover:text-primary transition-all hover:scale-110"><i class="fas fa-external-link-alt text-xl"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition-colors">MSLibrary</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Sistem manajemen perpustakaan digital untuk mempermudah sirkulasi buku.</p>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="reveal reveal-delay-3 glass rounded-2xl p-6 hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] group border border-white/40 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 bg-teal-100 dark:bg-emerald-900/40 text-primary dark:text-primary rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 group-hover:-rotate-6 transition-transform"><i class="fas fa-briefcase"></i></div>
+                            <div class="flex gap-3">
+                                <a href="https://github.com/putrawebdev/putra-jasa" target="_blank" class="text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all hover:scale-110"><i class="fab fa-github text-2xl"></i></a>
+                                <a href="https://putrawebdev.github.io/putra-jasa/" target="_blank" class="text-gray-400 hover:text-primary transition-all hover:scale-110"><i class="fas fa-external-link-alt text-xl"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition-colors">PutraJasa</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Landing page penyedia layanan jasa dengan desain yang modern.</p>
+                    </div>
+
+                    <!-- Project Card 4 -->
+                    <div class="reveal reveal-delay-1 glass rounded-2xl p-6 hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] group border border-white/40 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 bg-pink-100 dark:bg-emerald-900/40 text-primary dark:text-primary rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 group-hover:-rotate-6 transition-transform"><i class="fas fa-users"></i></div>
+                            <div class="flex gap-3">
+                                <a href="https://github.com/putrawebdev/socialwebdaka" target="_blank" class="text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all hover:scale-110"><i class="fab fa-github text-2xl"></i></a>
+                                <a href="https://putrawebdev.github.io/socialwebdaka/" target="_blank" class="text-gray-400 hover:text-primary transition-all hover:scale-110"><i class="fas fa-external-link-alt text-xl"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition-colors">SocialWeb</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Aplikasi web berkonsep sosial media untuk interaksi pengguna.</p>
+                    </div>
+
+                    <!-- Project Card 5 -->
+                    <div class="reveal reveal-delay-2 glass rounded-2xl p-6 hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] group border border-white/40 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 bg-orange-100 dark:bg-emerald-900/40 text-primary dark:text-primary rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 group-hover:-rotate-6 transition-transform"><i class="fas fa-user-circle"></i></div>
+                            <div class="flex gap-3">
+                                <a href="https://github.com/putrawebdev/portofoliodaka" target="_blank" class="text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all hover:scale-110"><i class="fab fa-github text-2xl"></i></a>
+                                <a href="https://putrawebdev.github.io/portofoliodaka/" target="_blank" class="text-gray-400 hover:text-primary transition-all hover:scale-110"><i class="fas fa-external-link-alt text-xl"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition-colors">Portofolio V1</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Website portofolio pribadi versi sebelumnya.</p>
+                    </div>
+
+                    <!-- Project Card 6 -->
+                    <div class="reveal reveal-delay-3 glass rounded-2xl p-6 hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] group border border-white/40 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 bg-green-100 dark:bg-emerald-900/40 text-primary dark:text-primary rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 group-hover:-rotate-6 transition-transform"><i class="fas fa-map-marked-alt"></i></div>
+                            <div class="flex gap-3">
+                                <a href="https://github.com/putrawebdev/DesaKu" target="_blank" class="text-gray-400 hover:text-gray-800 dark:hover:text-white transition-all hover:scale-110"><i class="fab fa-github text-2xl"></i></a>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 dark:text-white group-hover:text-primary transition-colors">DesaKu & LaDang</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Sistem informasi untuk mempermudah tata kelola data pedesaan.</p>
+                    </div>
+                </div>
+                
+                <div class="reveal mt-12 inline-block px-6 py-2 rounded-full glass border border-white/40 shadow-sm">
+                    <p class="text-sm text-gray-700 dark:text-gray-300 transition-all duration-300 font-medium">Proyek lainnya: ruzlymerch, Sembilansatu, Kantin, booklist, Ninetyoneclass.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / Contact -->
+        <footer id="contact" class="bg-slate-900 dark:bg-slate-950 text-white py-16 relative border-t border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <h2 class="reveal text-3xl font-bold mb-8">Contact for Discussion and Collaboration !</h2>
+                <div class="reveal flex justify-center space-x-8 mb-10">
+                    <a href="https://instagram.com/putraaactr_" target="_blank" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gradient-to-tr from-yellow-400 via-primary to-primary transition-all hover:scale-110 shadow-lg"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="https://tiktok.com/@iyaadehapaaja" target="_blank" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-black transition-all hover:scale-110 shadow-lg"><i class="fab fa-tiktok text-xl"></i></a>
+                    <a href="https://github.com/putrawebdev" target="_blank" class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#333] transition-all hover:scale-110 shadow-lg"><i class="fab fa-github text-xl"></i></a>
+                </div>
+                <p class="text-gray-500 text-sm font-medium tracking-wide">
+                    &copy; 2026 Daka Agung Putra</i>
+                </p>
+            </div>
+        </footer>
+
+        <!-- Scripts: Dark Mode & Two-Way Reveal on Scroll -->
+        <script>
+            // --- 1. Logika Dark Mode ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
+            });
+
+            // --- 2. Logika Dua Arah Reveal on Scroll (Muncul saat di scroll, keluar saat lewat) ---
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, {
+                threshold: 0.1, 
+                rootMargin: "0px 0px -40px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        </script>
+    </body>
+</html>
